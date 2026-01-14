@@ -9,8 +9,8 @@ void setup() {
 }
 
 
-float outval = 0; unsigned long tbut = 0; unsigned long tnow = 0; unsigned long tdiff = 0;
-int dim = HIGH; int off = LOW;
+float outval = 0; unsigned long tbut = 0; unsigned long tnow = 0; unsigned long tdiff = 0; //timing variables
+int dim = HIGH; int off = LOW; //used in making light stay on after button release, or turning of on button press
 int state = LOW;
 int lastval = LOW;
 int val = LOW;
@@ -21,7 +21,7 @@ val = digitalRead(BUTTON);
 
 if (lastval == LOW && val == HIGH){// Button Press
 
-tbut = millis();
+tbut = millis(); // start timing
 Serial.print("Button press at ");
 Serial.println(tbut);
 
@@ -29,10 +29,10 @@ if (off == HIGH){ // Turn of LED if in off mode
 digitalWrite(LED,LOW); //Turns off LED  if secodn let go of button
 }
 
-delay(bl);
+delay(bl); // switch bounce
 }
 
-if (val == HIGH && dim == HIGH){
+if (val == HIGH && dim == HIGH){ //check to increase brightness per loop
 if (outval >= 255){outval =255;}
 outval += .005;
 analogWrite(LED, ((int) (outval)));
@@ -53,7 +53,7 @@ Serial.println(tnow);
 delay(bl); // Switch Bounce
 
 
-if (off == HIGH){
+if (off == HIGH){ // turn to diming mode of off mores
 off = LOW;
 dim = HIGH;
 }
@@ -66,6 +66,6 @@ outval =0;
 
 }//End switch off if statement
 
-lastval = val;
+lastval = val; // check for button press
 }
 
